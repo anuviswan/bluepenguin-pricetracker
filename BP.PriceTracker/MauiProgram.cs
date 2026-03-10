@@ -53,6 +53,7 @@ namespace BP.PriceTracker
             builder.Services.AddScoped<INavigationCacheService, NavigationCacheService>();
             builder.Services.AddScoped<IUserService,UserService>();
             builder.Services.AddScoped<IProductService,ProductService>();
+            builder.Services.AddScoped<ICameraService,CameraService>();
 
             // Register ApiService with typed HttpClient
             builder.Services.AddHttpClient<IApiService, ApiService>((sp, client) =>

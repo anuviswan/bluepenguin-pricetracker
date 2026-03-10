@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Media;
 
 namespace BP.PriceTracker.ViewModels;
 
@@ -8,6 +9,8 @@ public partial class HomeViewModel(ILogger<HomeViewModel> logger): ObservableObj
 {
     [ObservableProperty]
     private bool isBusy;
+
+    private ILogger<HomeViewModel> Logger => logger;
 
 
     [RelayCommand]
@@ -20,7 +23,30 @@ public partial class HomeViewModel(ILogger<HomeViewModel> logger): ObservableObj
     [RelayCommand]
     private async Task Scan()
     {
-        
+        try
+        {
+            Logger.LogInformation("Check camera availabaility");
+            if (MediaPicker.Default.IsCaptureSupported)
+            {
+                Logger.LogInformation("Camera is available, opening camera");
+                var photo = await MediaPicker.Default.CapturePhotoAsync();
+                if (photo != null)
+                {
+                    Logger.LogInformation("Photo captured successfully: {FileName}", photo.FileName);
+                    // Handle the captured photo as needed
+                }
+                else
+                {
+                    Logger.LogWarning("Photo capture was canceled by the user.");
+                }
+            }
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
     }
 
 }

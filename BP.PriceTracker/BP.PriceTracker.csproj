@@ -99,6 +99,9 @@
 	  <MauiXaml Update="Views\MaterialsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\ScanPreviewView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\SearchResultView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
