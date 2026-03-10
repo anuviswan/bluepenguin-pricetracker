@@ -7,55 +7,23 @@ using System.Collections.ObjectModel;
 
 namespace BP.PriceTracker.ViewModels;
 
-public partial class HomeViewModel(IProductService productService,INavigationCacheService cacheService, ILogger<HomeViewModel> logger): ObservableObject
+public partial class HomeViewModel(ILogger<HomeViewModel> logger): ObservableObject
 {
-    [ObservableProperty]
-    private ObservableCollection<TagItemEntry> tags = [];
-
     [ObservableProperty]
     private bool isBusy;
 
-    [RelayCommand]
-    private async Task LoadDataAsync()
-    {
-        if(IsBusy)
-            return;
-        try
-        {
-            IsBusy = true;
-            var categories = await productService.GetCategoriesAsync();
-            Tags = new ObservableCollection<TagItemEntry>(categories.Select(c => new TagItemEntry(c.Name, c.Id, false)));
-        }
-        catch (Exception e)
-        {
-            IsBusy = false;
-            logger.LogError("Failed to load categories {0}", e.Message);
-            await Snackbar.Make("Unable to retrieve categories", async ()=> await LoadDataAsync(), "Retry", new TimeSpan(0,0,5)).Show();
-        }
-        finally
-        {
-            IsBusy = false;
-        }
-    }
 
     [RelayCommand]
-    private async Task MoveNext()
+    private async Task Filter()
     {
-        cacheService.Add<IEnumerable<TagItemEntry>>("SelectedCategories", Tags.Where(t => t.IsSelected));
-        await Shell.Current.GoToAsync(Constants.Routes.MaterialView);
+        await Shell.Current.GoToAsync(Constants.Routes.CategoriesView);
     }
 
 
     [RelayCommand]
-    private async Task Clear()
+    private async Task Scan()
     {
-        cacheService.Remove("SelectedCategories");
-        for(int i=0; i < Tags.Count; i++)
-        {
-            var tag = Tags[i];
-            Tags[i] = tag with { IsSelected = false  };
-        }
-        OnPropertyChanged(nameof(Tags));
+        
     }
 
 }
