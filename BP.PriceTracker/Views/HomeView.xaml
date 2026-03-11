@@ -7,54 +7,8 @@
              xmlns:controls="clr-namespace:BP.PriceTracker.Controls.Controls;assembly=BP.PriceTracker.Controls"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="viewModels:HomeViewModel">
-    <ContentPage.Behaviors>
-        <toolkit:EventToCommandBehavior
-            EventName="Loaded"
-            Command="{Binding LoadDataCommand}" />
-    </ContentPage.Behaviors>
-    <Grid>
-        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
-            <ScrollView Orientation="Vertical">
-                <FlexLayout
-            Direction="Row"
-            Wrap="Wrap"
-            JustifyContent="Center"
-            Margin="10"
-            Padding="10"
-            BindableLayout.ItemsSource="{Binding Tags}">
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate x:DataType="viewModels:TagItemEntry">
-                            <controls:TagItem Text="{Binding Title}" IsSelected="{Binding IsSelected,Mode=TwoWay}" />
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
-                </FlexLayout>
-            </ScrollView>
-
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <Button Grid.Column="0" Text="Clear" Style="{StaticResource SecondaryRoundedButtonStyle}" Command="{Binding ClearCommand}"/>
-                <Button Grid.Column="1" Text="Next" Style="{StaticResource RoundedButtonStyle}" Command="{Binding MoveNextCommand}"/>
-            </Grid>
-            
-        </VerticalStackLayout>
-        <BoxView 
-        Color="Black" 
-        Opacity="0.3" 
-        IsVisible="{Binding IsBusy}" 
-        HorizontalOptions="Fill" 
-        VerticalOptions="Fill"
-        ZIndex="9" />
-        <ActivityIndicator 
-            IsRunning="{Binding IsBusy}"
-            IsVisible="{Binding IsBusy}"
-            Color="Blue"
-            VerticalOptions="Fill"
-            HorizontalOptions="Fill"
-            WidthRequest="50" HeightRequest="50" />
-    </Grid>
-
+    <VerticalStackLayout>
+        <Button Grid.Column="0" Text="Filter" Style="{StaticResource SecondaryRoundedButtonStyle}" Command="{Binding GoToFilterCommand}"/>
+        <Button Grid.Column="1" Text="Scan" Style="{StaticResource RoundedButtonStyle}" Command="{Binding ScanCommand}"/>
+    </VerticalStackLayout>
 </ContentPage>

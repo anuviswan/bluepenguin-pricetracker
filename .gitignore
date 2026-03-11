@@ -1,0 +1,52 @@
+# =========================
+# Build outputs
+# =========================
+bin/
+obj/
+out/
+[Bb]uild/
+[Ll]og/
+[Ll]ogs/
+
+# =========================
+# User-specific files
+# =========================
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# =========================
+# Visual Studio
+# =========================
+.vs/
+
+# =========================
+# Visual Studio Code
+# =========================
+.vscode/
+.history/
+*.code-workspace
+
+# =========================
+# Copilot
+# =========================
+.copilot/
+
+# =========================
+# OS generated files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Others
+# =========================
+*.swp
+*.tmp
+*.bak
+*.log
+*.tlog
+*.cache
+/BP.PriceTracker/appsettings.development.json
+/BP.PriceTracker/appsettings.production.json
