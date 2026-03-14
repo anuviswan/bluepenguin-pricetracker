@@ -11,8 +11,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Setup .NET 10 SDK
         uses: actions/setup-dotnet@v4
@@ -23,8 +22,8 @@ jobs:
       - name: Install MAUI workload
         run: dotnet workload install maui --skip-manifest-update
 
-      - name: Restore solution
+      - name: Restore
         run: dotnet restore BP.PriceTracker.sln
 
-      - name: Build solution
-        run: dotnet build BP.PriceTracker.sln --configuration Release --no-restore
+      - name: Build Android
+        run: dotnet build BP.PriceTracker/BP.PriceTracker.csproj -f net10.0-android --configuration Release --no-restore
