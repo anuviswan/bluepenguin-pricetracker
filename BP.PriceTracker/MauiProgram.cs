@@ -48,6 +48,7 @@ namespace BP.PriceTracker
             builder.Services.AddTransientWithShellRoute<Views.YearsView,ViewModels.YearsViewModel>(Constants.Routes.YearsView);
             builder.Services.AddTransientWithShellRoute<Views.SearchResultView,ViewModels.SearchResultViewModel>(Constants.Routes.SearchListView);
             builder.Services.AddTransientWithShellRoute<Views.CategoryView,ViewModels.CategoryViewModel>(Constants.Routes.CategoriesView);
+            builder.Services.AddTransientWithShellRoute<Views.ScanPreviewView,ViewModels.ScanPreviewViewModel>(Constants.Routes.ScanPreviewView);
 
 
             builder.Services.AddScoped<INavigationCacheService, NavigationCacheService>();
