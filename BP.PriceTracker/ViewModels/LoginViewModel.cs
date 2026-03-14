@@ -20,13 +20,13 @@ public partial class LoginViewModel(ILogger<LoginViewModel> logger, IUserService
     private async Task ExecuteLogin()
     {
         IsBusy = true;
-        var response = await userService.ValidateUser(PassKey!).ConfigureAwait(false);
+        var response = await userService.ValidateUser(PassKey!);
 
         if (response?.IsAuthenticated == true)
         {
             IsBusy = false;
-            await SecureStorage.SetAsync("auth_token", response.AuthToken).ConfigureAwait(false);
-            await Shell.Current.GoToAsync(Constants.Routes.HomeView).ConfigureAwait(false);
+            await SecureStorage.SetAsync("auth_token", response.AuthToken);
+            await Shell.Current.GoToAsync(Constants.Routes.HomeView);
         }
         else
         {
