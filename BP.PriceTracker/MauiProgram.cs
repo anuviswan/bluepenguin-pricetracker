@@ -48,12 +48,14 @@ namespace BP.PriceTracker
             builder.Services.AddTransientWithShellRoute<Views.YearsView,ViewModels.YearsViewModel>(Constants.Routes.YearsView);
             builder.Services.AddTransientWithShellRoute<Views.SearchResultView,ViewModels.SearchResultViewModel>(Constants.Routes.SearchListView);
             builder.Services.AddTransientWithShellRoute<Views.CategoryView,ViewModels.CategoryViewModel>(Constants.Routes.CategoriesView);
+            builder.Services.AddTransientWithShellRoute<Views.ScanPreviewView,ViewModels.ScanPreviewViewModel>(Constants.Routes.ScanPreviewView);
 
 
             builder.Services.AddScoped<INavigationCacheService, NavigationCacheService>();
             builder.Services.AddScoped<IUserService,UserService>();
             builder.Services.AddScoped<IProductService,ProductService>();
             builder.Services.AddScoped<ICameraService,CameraService>();
+            builder.Services.AddScoped<IImageSearchService,ImageSearchService>();
 
             // Register ApiService with typed HttpClient
             builder.Services.AddHttpClient<IApiService, ApiService>((sp, client) =>

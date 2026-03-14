@@ -1,4 +1,6 @@
 ﻿using BP.PriceTracker.Services.Interfaces;
+using BP.PriceTracker.Services.Services;
+using BP.PriceTracker.Services.Types;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -7,7 +9,7 @@ using System.Collections.ObjectModel;
 
 namespace BP.PriceTracker.ViewModels;
 
-public partial class YearsViewModel(INavigationCacheService cacheService, ILogger<YearsViewModel> logger):ObservableObject
+public partial class YearsViewModel(INavigationCacheService cacheService, IProductService productService, ILogger<YearsViewModel> logger):ObservableObject
 {
     [ObservableProperty]
     private ObservableCollection<TagItemEntry> tags = [];
@@ -43,6 +45,33 @@ public partial class YearsViewModel(INavigationCacheService cacheService, ILogge
     private async Task MoveNext()
     {
         cacheService.Add<IEnumerable<TagItemEntry>>("SelectedYears", Tags.Where(t => t.IsSelected));
-        await Shell.Current.GoToAsync(Constants.Routes.SearchListView);
+        var products = await LoadProductDetailsAsync().ConfigureAwait(false);
+        await Shell.Current.GoToAsync(Constants.Routes.SearchListView, new Dictionary<string, object>
+                    {
+                        { "Results", products }
+                    });
+    }
+
+
+    private async Task<IEnumerable<ProductDto>> LoadProductDetailsAsync()
+    {
+        // Read selected filters from navigation cache
+        var selectedCategories = cacheService.Get<IEnumerable<TagItemEntry>>("SelectedCategories")?.Select(t => t.Id) ?? Enumerable.Empty<string>();
+        var selectedMaterials = cacheService.Get<IEnumerable<TagItemEntry>>("SelectedMaterials")?.Select(t => t.Id) ?? Enumerable.Empty<string>();
+        var selectedCollections = cacheService.Get<IEnumerable<TagItemEntry>>("SelectedCollections")?.Select(t => t.Id) ?? Enumerable.Empty<string>();
+        var selectedFeatures = cacheService.Get<IEnumerable<TagItemEntry>>("SelectedFeatures")?.Select(t => t.Id) ?? Enumerable.Empty<string>();
+        var selectedYears = cacheService.Get<IEnumerable<TagItemEntry>>("SelectedYears")?.Select(t => t.Id) ?? Enumerable.Empty<string>();
+
+        var filters = new SearchFilter
+        {
+            Categories = selectedCategories.ToArray(),
+            Materials = selectedMaterials.ToArray(),
+            Collections = selectedCollections.ToArray(),
+            Features = selectedFeatures.ToArray(),
+            YearCodes = selectedYears.ToArray()
+        };
+
+        return await productService.SearchProductsAsync(filters);
+
     }
 }

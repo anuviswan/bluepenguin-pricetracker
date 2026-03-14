@@ -1,14 +1,25 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using BP.PriceTracker.Services.Interfaces;
+using BP.PriceTracker.Services.Types;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace BP.PriceTracker.ViewModels;
 
-[QueryProperty(nameof(ImageStream), nameof(ImageStream))]
-public partial class ScanPreviewViewModel: ObservableObject
+//[QueryProperty(nameof(ImageStream), nameof(ImageStream))]
+public partial class ScanPreviewViewModel(IImageSearchService imageSearchService): ObservableObject
 {
-    public Stream ImageStream { get; set; }
+    private IImageSearchService ImageSearchService => imageSearchService;
+    public Stream ImageStream
+    {
+        get => field;
+        set
+        {
+            field = value;
+            OnPropertyChanged(nameof(PreviewImage));
+        }
+    }
 
-    public ImageSource PreviewImage => ImageSource.FromStream(() => ImageStream);
+    public ImageSource? PreviewImage => ImageStream == null ? null : ImageSource.FromStream(() => ImageStream);
 
 
     [RelayCommand]
@@ -20,6 +31,6 @@ public partial class ScanPreviewViewModel: ObservableObject
     [RelayCommand]
     public async Task Confirm()
     {
-
+        var results = await ImageSearchService.SearchByImage(ImageStream).ConfigureAwait(false);
     }
 }

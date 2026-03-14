@@ -17,4 +17,5 @@ public static class Routes
     public const string YearsView = "Years";
 
     public const string SearchListView = "SearchList";
+    public const string ScanPreviewView = "ScanPreview";
 }

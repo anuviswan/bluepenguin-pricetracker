@@ -97,6 +97,52 @@ public class ApiService : IApiService
         };
     }
 
+    public async Task<ApiResult<TResponse>> PostAsync<TResponse>(string endpoint,Stream imageStream,string fileName,string? authToken = null)
+    {
+        using var content = new MultipartFormDataContent();
+
+        var imageContent = new StreamContent(imageStream);
+        imageContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+
+        content.Add(imageContent, "Image", fileName); // "Image" must match the API property name
+
+        var request = new HttpRequestMessage(HttpMethod.Post, endpoint)
+        {
+            Content = content
+        };
+
+        if (!string.IsNullOrWhiteSpace(authToken))
+        {
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
+        }
+
+        using var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+            var result = JsonSerializer.Deserialize<TResponse>(
+                responseContent,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            return new ApiResult<TResponse>
+            {
+                IsSuccess = true,
+                Data = result!,
+                StatusCode = response.StatusCode
+            };
+        }
+
+        return new ApiResult<TResponse>
+        {
+            IsSuccess = false,
+            Data = default,
+            StatusCode = response.StatusCode,
+            ErrorMessage = await response.Content.ReadAsStringAsync().ConfigureAwait(false)
+        };
+    }
+
     public async Task<ApiResult<TResponse>> PostAsync<TRequest, TResponse>(string endpoint, TRequest data, string? authToken = null)
     {
         var request = new HttpRequestMessage(HttpMethod.Post, endpoint)

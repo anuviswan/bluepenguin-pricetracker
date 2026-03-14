@@ -25,6 +25,7 @@ public partial class LoginViewModel(ILogger<LoginViewModel> logger, IUserService
         if (response?.IsAuthenticated == true)
         {
             IsBusy = false;
+            await SecureStorage.SetAsync("auth_token", response.AuthToken);
             await Shell.Current.GoToAsync(Constants.Routes.HomeView);
         }
         else

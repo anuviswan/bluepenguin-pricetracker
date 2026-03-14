@@ -33,7 +33,11 @@ public partial class HomeViewModel(ILogger<HomeViewModel> logger): ObservableObj
                 if (photo != null)
                 {
                     Logger.LogInformation("Photo captured successfully: {FileName}", photo.FileName);
-                    // Handle the captured photo as needed
+                    // Handle the captured photo as needed, pass to Preview View Model
+                    await Shell.Current.GoToAsync(Constants.Routes.ScanPreviewView, new Dictionary<string, object>
+                    {
+                        { nameof(ScanPreviewViewModel.ImageStream), await photo.OpenReadAsync() }
+                    });
                 }
                 else
                 {
