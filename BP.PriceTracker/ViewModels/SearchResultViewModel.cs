@@ -83,7 +83,7 @@ public partial class SearchResultViewModel : ObservableObject
             await sem.WaitAsync();
             try
             {
-                var imageDataUrl = await _productService.GetPrimaryImageForSkuAsync(product.SKU);
+                var imageDataUrl = await _productService.GetPrimaryImageForSkuAsync(product.SKU).ConfigureAwait(false);
                 if (!string.IsNullOrWhiteSpace(imageDataUrl))
                 {
                     // update product in-place on UI thread

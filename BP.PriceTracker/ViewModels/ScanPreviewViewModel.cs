@@ -1,4 +1,5 @@
 ﻿using BP.PriceTracker.Services.Interfaces;
+using BP.PriceTracker.Services.Types;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -30,6 +31,6 @@ public partial class ScanPreviewViewModel(IImageSearchService imageSearchService
     [RelayCommand]
     public async Task Confirm()
     {
-        await ImageSearchService.SearchByImage(ImageStream);
+        var results = await ImageSearchService.SearchByImage(ImageStream).ConfigureAwait(false);
     }
 }

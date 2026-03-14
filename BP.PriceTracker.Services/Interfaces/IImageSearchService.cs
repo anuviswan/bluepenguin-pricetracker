@@ -1,6 +1,8 @@
-﻿namespace BP.PriceTracker.Services.Interfaces;
+﻿using BP.PriceTracker.Services.Types;
+
+namespace BP.PriceTracker.Services.Interfaces;
 
 public interface IImageSearchService
 {
-    Task SearchByImage(Stream stream);
+    Task<ImageSearchResultResponse?> SearchByImage(Stream stream);
 }

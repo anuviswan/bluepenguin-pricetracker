@@ -9,4 +9,5 @@ public record ApiSettings
     public string GetFeaturesEndpoint { get; init; } = string.Empty;
     public string GetCollectionsEndpoint { get; init; } = string.Empty;
     public string SearchProductsEndpoint { get; init; } = string.Empty;
+    public string SearchByImageEndpoint { get; init; } = string.Empty;
 }
