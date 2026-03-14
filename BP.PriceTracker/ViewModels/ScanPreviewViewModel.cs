@@ -4,13 +4,21 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace BP.PriceTracker.ViewModels;
 
-[QueryProperty(nameof(ImageStream), nameof(ImageStream))]
+//[QueryProperty(nameof(ImageStream), nameof(ImageStream))]
 public partial class ScanPreviewViewModel(IImageSearchService imageSearchService): ObservableObject
 {
     private IImageSearchService ImageSearchService => imageSearchService;
-    public Stream ImageStream { get; set; }
+    public Stream ImageStream
+    {
+        get => field;
+        set
+        {
+            field = value;
+            OnPropertyChanged(nameof(PreviewImage));
+        }
+    }
 
-    public ImageSource PreviewImage => ImageSource.FromStream(() => ImageStream);
+    public ImageSource? PreviewImage => ImageStream == null ? null : ImageSource.FromStream(() => ImageStream);
 
 
     [RelayCommand]

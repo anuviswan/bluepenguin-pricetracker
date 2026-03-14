@@ -6,7 +6,8 @@
     <VerticalStackLayout>
         <Image x:Name="PreviewImage"
            Aspect="AspectFit"
-           HeightRequest="400" />
+           HeightRequest="400" 
+               Source="{Binding PreviewImage}"/>
 
         <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
 
