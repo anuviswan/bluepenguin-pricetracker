@@ -11,7 +11,8 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Setup .NET 10 SDK
         uses: actions/setup-dotnet@v4
@@ -25,5 +26,5 @@ jobs:
       - name: Restore
         run: dotnet restore BP.PriceTracker.sln -p:TargetFramework=net10.0-android
 
-      - name: Build Android
-        run: dotnet build BP.PriceTracker/BP.PriceTracker.csproj -f net10.0-android --configuration Release --no-restore
+      - name: Build solution
+        run: dotnet build BP.PriceTracker.sln --configuration Release --no-restore -p:TargetFramework=net10.0-android
