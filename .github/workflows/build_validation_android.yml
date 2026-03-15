@@ -1,14 +1,15 @@
 name: Build Validation
 
 on:
-  pull_request:
-    branches: ["**"]
-  push:
-    branches: ["main"]
+ pull_request:
+branches: ["**"]
+ push:
+branches: ["main"]
 
 jobs:
-  android-build:
-    runs-on: windows-latest
+android-build:
+runs-on: windows-latest
+
 
 steps:
   - name: Checkout
@@ -28,3 +29,4 @@ steps:
 
   - name: Build Android
     run: dotnet build BP.PriceTracker/BP.PriceTracker.csproj -f net10.0-android -c Release --no-restore
+
