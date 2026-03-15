@@ -10,7 +10,7 @@ namespace BP.PriceTracker.ViewModels;
 public partial class CategoryViewModel(IProductService productService, INavigationCacheService cacheService, ILogger<HomeViewModel> logger) : ObservableObject
 {
     [ObservableProperty]
-    private ObservableCollection<TagItemEntry> tags = [];
+    public ObservableCollection<TagItemEntry> tags = [];
 
     [ObservableProperty]
     private bool isBusy;

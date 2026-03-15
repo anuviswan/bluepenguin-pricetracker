@@ -1,4 +1,5 @@
-﻿using BP.PriceTracker.Services.Interfaces;
+﻿using BP.PriceTracker.PlatformServices;
+using BP.PriceTracker.Services.Interfaces;
 using BP.PriceTracker.Services.Options;
 using BP.PriceTracker.Services.Services;
 using CommunityToolkit.Maui;
@@ -51,11 +52,12 @@ namespace BP.PriceTracker
             builder.Services.AddTransientWithShellRoute<Views.ScanPreviewView,ViewModels.ScanPreviewViewModel>(Constants.Routes.ScanPreviewView);
 
 
-            builder.Services.AddScoped<INavigationCacheService, NavigationCacheService>();
-            builder.Services.AddScoped<IUserService,UserService>();
-            builder.Services.AddScoped<IProductService,ProductService>();
-            builder.Services.AddScoped<ICameraService,CameraService>();
-            builder.Services.AddScoped<IImageSearchService,ImageSearchService>();
+            builder.Services.AddSingleton<INavigationCacheService, NavigationCacheService>();
+            builder.Services.AddSingleton<IUserService,UserService>();
+            builder.Services.AddSingleton<IProductService,ProductService>();
+            builder.Services.AddSingleton<ICameraService,CameraService>();
+            builder.Services.AddSingleton<IImageSearchService,ImageSearchService>();
+            builder.Services.AddSingleton<ITokenService,TokenService>();
 
             // Register ApiService with typed HttpClient
             builder.Services.AddHttpClient<IApiService, ApiService>((sp, client) =>

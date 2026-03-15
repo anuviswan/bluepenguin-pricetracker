@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BP.PriceTracker.ViewModels;
 
-public partial class LoginViewModel(ILogger<LoginViewModel> logger, IUserService userService) : ObservableObject
+public partial class LoginViewModel(IUserService userService, ITokenService tokenService) : ObservableObject
 {
 
     [ObservableProperty]
@@ -25,7 +25,7 @@ public partial class LoginViewModel(ILogger<LoginViewModel> logger, IUserService
         if (response?.IsAuthenticated == true)
         {
             IsBusy = false;
-            await SecureStorage.SetAsync("auth_token", response.AuthToken);
+            await tokenService.SetAuthTokenAsync(response.AuthToken);
             await Shell.Current.GoToAsync(Constants.Routes.HomeView);
         }
         else

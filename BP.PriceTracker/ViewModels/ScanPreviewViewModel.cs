@@ -9,7 +9,7 @@ namespace BP.PriceTracker.ViewModels;
 public partial class ScanPreviewViewModel(IImageSearchService imageSearchService): ObservableObject
 {
     private IImageSearchService ImageSearchService => imageSearchService;
-    public Stream ImageStream
+    public required Stream ImageStream
     {
         get => field;
         set

@@ -20,6 +20,7 @@ Rules:
  - ViewModels should be thin and off-load interaction with APIs to Services
  - Use dedicated services for API interaction
  - Use CommunityToolkit.Maui feature when ever applicable
+ - MAUI related code should only exist in PriceTracker project.
 
 ---
 ## Error Handling
@@ -37,4 +38,5 @@ Rules:
 - Keep methods concise and readable.
 - Use meaningful names.
 - No synchronous I/O.
+- Always use namespace scoped files
 ---
