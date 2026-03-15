@@ -23,7 +23,7 @@ jobs:
         run: dotnet workload install maui --skip-manifest-update
 
       - name: Restore
-        run: dotnet restore BP.PriceTracker.sln
+        run: dotnet restore BP.PriceTracker.sln -p:TargetFramework=net10.0-android
 
       - name: Build Android
         run: dotnet build BP.PriceTracker/BP.PriceTracker.csproj -f net10.0-android --configuration Release --no-restore
