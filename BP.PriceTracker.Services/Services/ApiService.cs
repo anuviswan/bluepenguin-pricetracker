@@ -101,10 +101,16 @@ public class ApiService : IApiService
     {
         using var content = new MultipartFormDataContent();
 
+        if (imageStream.CanSeek)
+        {
+            imageStream.Position = 0;
+        }
         var imageContent = new StreamContent(imageStream);
         imageContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
 
         content.Add(imageContent, "Image", fileName); // "Image" must match the API property name
+
+
 
         var request = new HttpRequestMessage(HttpMethod.Post, endpoint)
         {

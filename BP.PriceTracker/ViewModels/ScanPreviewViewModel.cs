@@ -9,17 +9,22 @@ namespace BP.PriceTracker.ViewModels;
 public partial class ScanPreviewViewModel(IImageSearchService imageSearchService): ObservableObject
 {
     private IImageSearchService ImageSearchService => imageSearchService;
+    private byte[]? _imageBytes;
+
     public Stream ImageStream
     {
-        get => field;
+        get => new MemoryStream(_imageBytes!);
         set
         {
-            field = value;
+            using var ms = new MemoryStream();
+            value.CopyTo(ms);
+            _imageBytes = ms.ToArray();
+
             OnPropertyChanged(nameof(PreviewImage));
         }
     }
 
-    public ImageSource? PreviewImage => ImageStream == null ? null : ImageSource.FromStream(() => ImageStream);
+    public ImageSource? PreviewImage =>    _imageBytes == null ? null: ImageSource.FromStream(() => new MemoryStream(_imageBytes));
 
 
     [RelayCommand]
@@ -31,6 +36,7 @@ public partial class ScanPreviewViewModel(IImageSearchService imageSearchService
     [RelayCommand]
     public async Task Confirm()
     {
-        var results = await ImageSearchService.SearchByImage(ImageStream).ConfigureAwait(false);
+        var stream = new MemoryStream(_imageBytes!);
+        var results = await ImageSearchService.SearchByImage(stream);
     }
 }
