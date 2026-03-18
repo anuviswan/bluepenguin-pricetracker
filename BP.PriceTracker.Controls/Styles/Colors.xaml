@@ -7,6 +7,9 @@
     <!-- 1. Primary Brand      -->
     <!-- ===================== -->
     <Color x:Key="PrimaryBlue">#039AC8</Color>
+    <Color x:Key="CancelColor">#6B8A96</Color>
+    <Color x:Key="SecondaryColor">#028A8F</Color>
+    <Color x:Key="NavBarColor">#027FA3</Color>
     <!-- brand / CTAs -->
     <Color x:Key="PrimaryBlueLight">#6FD6F5</Color>
     <!-- hover, playful accents -->
