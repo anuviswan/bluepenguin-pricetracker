@@ -38,5 +38,19 @@ public partial class ScanPreviewViewModel(IImageSearchService imageSearchService
     {
         var stream = new MemoryStream(_imageBytes!);
         var results = await ImageSearchService.SearchByImage(stream);
+
+        var productDisplays = results?.Select(p => new ProductDisplayDto
+        {
+            Sku = p.SkuId,
+            ProductName = p.ProductName ?? string.Empty,
+            PrimaryImageUrl = p.ImageUrl ?? string.Empty,
+            DiscountPrice = p.Discount ?? 0,
+            Price = p.Price
+        }).ToList();
+
+        await Shell.Current.GoToAsync(Constants.Routes.SearchListView, new Dictionary<string, object>
+                    {
+                        { "Results", productDisplays ?? Enumerable.Empty<ProductDisplayDto>()}
+                    });
     }
 }

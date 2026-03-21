@@ -12,6 +12,6 @@ public partial class SearchResultViewModel : ObservableObject
     private bool isBusy;
 
     [ObservableProperty]
-    private ObservableCollection<ProductDto> products = new();
+    private ObservableCollection<ProductDisplayDto> products = new();
     
 }

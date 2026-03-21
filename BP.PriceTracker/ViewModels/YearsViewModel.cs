@@ -46,9 +46,18 @@ public partial class YearsViewModel(INavigationCacheService cacheService, IProdu
     {
         cacheService.Add<IEnumerable<TagItemEntry>>("SelectedYears", Tags.Where(t => t.IsSelected));
         var products = await LoadProductDetailsAsync().ConfigureAwait(false);
+
+        var productDisplays = products.Select(p => new ProductDisplayDto
+        {
+            Sku = p.Sku,
+            ProductName = p.ProductName,
+            PrimaryImageUrl = p.PrimaryImageUrl ?? string.Empty,
+            DiscountPrice = p.DiscountPrice ?? 0,
+            Price = p.Price
+        }).ToList();
         await Shell.Current.GoToAsync(Constants.Routes.SearchListView, new Dictionary<string, object>
                     {
-                        { "Results", products }
+                        { "Results", productDisplays }
                     });
     }
 
