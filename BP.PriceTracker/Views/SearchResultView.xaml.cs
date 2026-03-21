@@ -15,7 +15,7 @@ public partial class SearchResultView : ContentPage
     {
         if (query.TryGetValue(nameof(SearchResultViewModel.Products), out var products))
         {
-            ((SearchResultViewModel)BindingContext).Products = new System.Collections.ObjectModel.ObservableCollection<ProductDto>((IEnumerable<ProductDto>)products);
+            ((SearchResultViewModel)BindingContext).Products = new System.Collections.ObjectModel.ObservableCollection<ProductDisplayDto>((IEnumerable<ProductDisplayDto>)products);
         }
     }
 }
