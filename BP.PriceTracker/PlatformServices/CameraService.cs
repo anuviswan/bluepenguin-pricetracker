@@ -1,8 +1,7 @@
-﻿
-using BP.PriceTracker.Services.Interfaces;
+﻿using BP.PriceTracker.Services.Interfaces;
 using Microsoft.Maui.Media;
 
-namespace BP.PriceTracker.Services.Services;
+namespace BP.PriceTracker.PlatformServices;
 
 public class CameraService : ICameraService
 {

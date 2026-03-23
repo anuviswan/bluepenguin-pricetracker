@@ -3,18 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BP.PriceTracker.Views.ScanPreviewView"
              Title="ScanPreviewView">
-    <VerticalStackLayout>
-        <Image x:Name="PreviewImage"
-           Aspect="AspectFit"
-           HeightRequest="400" 
-               Source="{Binding PreviewImage}"/>
-
+    <VerticalStackLayout VerticalOptions="CenterAndExpand">
+        <Image x:Name="PreviewImage" Aspect="AspectFit" HeightRequest="400" Source="{Binding PreviewImage}"/>
         <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
-
-            <Button Text="Retake" Command="{Binding RetakeCommand}"/>
-
-            <Button Text="Search" Command="{Binding ConfirmCommand}"/>
-
+            <Button Text="Retake" Command="{Binding RetakeCommand}" Style="{StaticResource CancelRoundedButtonStyle}"/>
+            <Button Text="Search" Command="{Binding ConfirmCommand}" Style="{StaticResource RoundedButtonStyle}"/>
         </HorizontalStackLayout>
 
     </VerticalStackLayout>
